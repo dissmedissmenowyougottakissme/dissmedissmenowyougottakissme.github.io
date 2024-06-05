@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subway Rizzlers</title>
+    <title>Random Word Generator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -61,7 +61,7 @@
 </head>
 <body>
 
-<h1>Subway Rizzlers</h1>
+<h1>Random Word Generator</h1>
 <button onclick="generateRandomWord()">Generate Word</button>
 <button onclick="showInputSection()">Add Word</button>
 <div id="input-section">
@@ -73,7 +73,7 @@
 </div>
 
 <script>
-    const words = [
+    let words = JSON.parse(localStorage.getItem('words')) || [
         "apple", "banana", "cherry", "date", "elderberry", "fig", "grape", "honeydew",
         "indigo", "jackfruit", "kiwi", "lemon", "mango", "nectarine", "orange", "papaya",
         "quince", "raspberry", "strawberry", "tangerine", "ugli", "vanilla", "watermelon",
@@ -95,6 +95,7 @@
         const newWord = wordInput.value.trim();
         if (newWord !== "") {
             words.push(newWord);
+            localStorage.setItem('words', JSON.stringify(words));
             wordInput.value = "";
             document.getElementById("input-section").style.display = 'none';
             alert(`Word "${newWord}" added to the list!`);
@@ -102,6 +103,13 @@
             alert("Please enter a valid word.");
         }
     }
+
+    // Initialize the word list from localStorage if it exists
+    window.onload = () => {
+        if (localStorage.getItem('words')) {
+            words = JSON.parse(localStorage.getItem('words'));
+        }
+    };
 </script>
 
 </body>
